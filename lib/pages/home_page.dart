@@ -57,31 +57,30 @@ class _myHomePageState extends State<myHomePage> {
                     SizedBox(height: 20),
                     //Expense date selector
                     TextFormField(
-  readOnly: true,
-  controller: newExpenseDateController,
-  onTap: () async {
-    // Show the date picker dialog
-    final selectedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime.now(),
-    );
+                      readOnly: true,
+                      controller: newExpenseDateController,
+                      onTap: () async {
+                        // Show the date picker dialog
+                        final selectedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime.now(),
+                        );
 
-    if (selectedDate != null) {
-      // Update the text controller with the selected date
-      newExpenseDateController.text = selectedDate.toString().split(" ")[0];
-    }
-  },
-  decoration: InputDecoration(
-    labelText: 'Date',
-    icon: Icon(Icons.calendar_today),
-  ),
-),
+                        if (selectedDate != null) {
+                          // Update the text controller with the selected date
+                          newExpenseDateController.text =
+                              selectedDate.toString().split(" ")[0];
+                        }
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Date',
+                        icon: Icon(Icons.calendar_today),
+                      ),
+                    ),
 
 //Expense date selector
-                    
-
 
                     //expense Amount
                     TextFormField(
@@ -101,6 +100,10 @@ class _myHomePageState extends State<myHomePage> {
               ),
               actions: [
                 CupertinoButton(
+                  onPressed: cancel,
+                  child: const Text("Cancel"),
+                ),
+                CupertinoButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       saveExpanse();
@@ -108,10 +111,6 @@ class _myHomePageState extends State<myHomePage> {
                   },
                   child: const Text("Save"),
                 ),
-                CupertinoButton(
-                  onPressed: cancel,
-                  child: const Text("Cancel"),
-                )
               ],
             ));
   }
@@ -163,27 +162,28 @@ class _myHomePageState extends State<myHomePage> {
 
                     SizedBox(height: 20),
                     TextFormField(
-  readOnly: true,
-  controller: newIncomeDateController,
-  onTap: () async {
-    // Show the date picker dialog
-    final selectedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime.now(),
-    );
+                      readOnly: true,
+                      controller: newIncomeDateController,
+                      onTap: () async {
+                        // Show the date picker dialog
+                        final selectedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime.now(),
+                        );
 
-    if (selectedDate != null) {
-      // Update the text controller with the selected date
-      newIncomeDateController.text = selectedDate.toString().split(" ")[0];
-    }
-  },
-  decoration: InputDecoration(
-    labelText: 'Date',
-    icon: Icon(Icons.calendar_today),
-  ),
-),
+                        if (selectedDate != null) {
+                          // Update the text controller with the selected date
+                          newIncomeDateController.text =
+                              selectedDate.toString().split(" ")[0];
+                        }
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Date',
+                        icon: Icon(Icons.calendar_today),
+                      ),
+                    ),
                     //income Note
                     TextFormField(
                       controller: newIncomeNameController,
@@ -202,6 +202,10 @@ class _myHomePageState extends State<myHomePage> {
               ),
               actions: [
                 CupertinoButton(
+                  onPressed: cancel,
+                  child: const Text("Cancel"),
+                ),
+                CupertinoButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       saveIncome();
@@ -209,10 +213,7 @@ class _myHomePageState extends State<myHomePage> {
                   },
                   child: const Text("Save"),
                 ),
-                CupertinoButton(
-                  onPressed: cancel,
-                  child: const Text("Cancel"),
-                )
+                
               ],
             ));
   }
@@ -221,9 +222,11 @@ class _myHomePageState extends State<myHomePage> {
     clearControler();
     Navigator.of(context).pop();
   }
-void deleteExpense(ExpenseItem expense){
-  Provider.of<ExpenseData>(context, listen: false).deleteExpense(expense);
-}
+
+  void deleteExpense(ExpenseItem expense) {
+    Provider.of<ExpenseData>(context, listen: false).deleteExpense(expense);
+  }
+
   //save data
   void saveIncome() {
     ExpenseItem newIncome = ExpenseItem(
@@ -248,11 +251,10 @@ void deleteExpense(ExpenseItem expense){
     newIncomeDateController.clear();
   }
 
-
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    Provider.of<ExpenseData>( context, listen:false).prepareData() ;
+    Provider.of<ExpenseData>(context, listen: false).prepareData();
   }
 
   //prepare data on startup
@@ -301,12 +303,11 @@ void deleteExpense(ExpenseItem expense){
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w400)),
                     _transactionBox(),
-                    SizedBox(height: 15),
-                    const Text("Here we are!"),
+                    // SizedBox(height: 15),
+                    // const Text("Here we are!"),
                   ],
                 ),
               )),
-              
             ));
   }
 }
@@ -386,9 +387,8 @@ Widget _transactionBox() {
     return Expanded(
       child: ListView.builder(
         itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.only(top:5.0),
+          padding: const EdgeInsets.only(top: 5.0),
           child: ListTile(
-            
             leading: CircleAvatar(
               backgroundColor: value.getAllExpenseList()[index].type == "Income"
                   ? Color.fromARGB(255, 118, 221, 122)
@@ -401,7 +401,10 @@ Widget _transactionBox() {
               ),
             ),
             title: Text(value.getAllExpenseList()[index].name ?? "N/A"),
-            subtitle: Text(dateToMMDD(value.getAllExpenseList()[index].datetime).toString()+" - " +value.getAllExpenseList()[index].type),
+            subtitle: Text(dateToMMDD(value.getAllExpenseList()[index].datetime)
+                    .toString() +
+                " - " +
+                value.getAllExpenseList()[index].type),
             trailing: Text(
               value.getAllExpenseList()[index].amount,
               style: const TextStyle(fontSize: 18),
@@ -436,7 +439,6 @@ class CustomButton extends StatelessWidget {
     required this.backgroundColor,
     required this.onPressed,
     required this.width,
-
   });
 
   @override

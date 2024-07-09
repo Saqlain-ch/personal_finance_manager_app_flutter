@@ -3,35 +3,33 @@ import 'package:myapp/data/hive_database.dart';
 import 'package:myapp/dateTime/date_time_healper.dart';
 import 'package:myapp/models/expense_item.dart';
 
-
-class ExpenseData extends ChangeNotifier{
-
+class ExpenseData extends ChangeNotifier {
   //List of all expenses
   List<ExpenseItem> overallExpenseList = [];
 
   //get expense list
-  List<ExpenseItem> getAllExpenseList(){
+  List<ExpenseItem> getAllExpenseList() {
     return overallExpenseList;
   }
 
 //prepare to display data
-final db = HiveDataBase();
-void prepareData(){
-  //if data exist in Hive database, get it 
-  if(db.readData().isNotEmpty){
-    overallExpenseList = db.readData();
+  final db = HiveDataBase();
+  void prepareData() {
+    //if data exist in Hive database, get it
+    if (db.readData().isNotEmpty) {
+      overallExpenseList = db.readData();
+    }
   }
-   
-}
+
   //delete all data from class and database
-  void deleteAllData(){
+  void deleteAllData() {
     overallExpenseList.clear();
     db.deleteAllData();
     notifyListeners();
   }
 
   //add new expense
-  void addExpense(ExpenseItem newExpense){
+  void addExpense(ExpenseItem newExpense) {
     overallExpenseList.add(newExpense);
     notifyListeners();
     overallExpenseList.sort((a, b) => b.datetime.compareTo(a.datetime));
@@ -40,27 +38,25 @@ void prepareData(){
 
   //delete expense
 
-  void deleteExpense(ExpenseItem expense){
+  void deleteExpense(ExpenseItem expense) {
     overallExpenseList.remove(expense);
     notifyListeners();
     overallExpenseList.sort((a, b) => b.datetime.compareTo(a.datetime));
     db.saveDate(overallExpenseList);
-  
   }
 
   // get day from datetime object
 
-  String getDay(DateTime datetime){
+  String getDay(DateTime datetime) {
     return datetime.toString().split(" ")[0];
   }
 
   //date for the start of week
 
-  DateTime startOfWeek(){
+  DateTime startOfWeek() {
     DateTime now = DateTime.now();
     return now.subtract(Duration(days: now.weekday));
   }
-
 
   /*
    
@@ -85,39 +81,37 @@ void prepareData(){
     ] 
    */
 
-
-
-  Map<String, double> calculateDailyExpenseSummary(){
+  Map<String, double> calculateDailyExpenseSummary() {
     Map<String, double> dailyExpenseSummary = {};
 
-
-    for(var expense in overallExpenseList){
+    for (var expense in overallExpenseList) {
       String date = convertDateTimeToString(expense.datetime);
-      double ammount = double.parse(expense.amount);
+      double amount = double.parse(expense.amount); // Corrected typo
 
-      if (dailyExpenseSummary.containsKey(date)){
-        double crruntAmmount = dailyExpenseSummary[date]!;
-        crruntAmmount += ammount;
-        dailyExpenseSummary[date] = crruntAmmount;
+      if (dailyExpenseSummary.containsKey(date)) {
+        double currentAmount = dailyExpenseSummary[date]!;
+        if (expense.type == "Expense") {
+          currentAmount += amount;
+          dailyExpenseSummary[date] = currentAmount;
+        }
+      } else {
+        dailyExpenseSummary.addAll({date: amount});
       }
-      else{
-        dailyExpenseSummary.addAll({date: ammount});
+    }
+
+    return dailyExpenseSummary;
+  }
+
+  String getCrruntBalance() {
+    double crruntBalance = 0;
+    //Sum of the ammount of all expensed
+    for (var expanse in overallExpenseList) {
+      if (expanse.type == "Income") {
+        crruntBalance += double.parse(expanse.amount);
+      } else {
+        crruntBalance -= double.parse(expanse.amount);
       }
     }
-  return dailyExpenseSummary; 
-  }
-  
-  String getCrruntBalance(){
-     double crruntBalance=0;
-  //Sum of the ammount of all expensed
-  for(var expanse in overallExpenseList){
-    if(expanse.type == "Income"){
-      crruntBalance += double.parse(expanse.amount);
-    }
-    else{
-      crruntBalance -= double.parse(expanse.amount);
-    }
-  }
-  return crruntBalance.toString();
+    return crruntBalance.toString();
   }
 }
