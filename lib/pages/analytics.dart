@@ -22,7 +22,7 @@ class Analytics extends StatelessWidget {
                 child: ListView(
                   children: [
                     Text(
-                      "",
+                      "Last Week Expenses",
                       style: TextStyle(fontSize: 20),
                     ),
                     SizedBox(

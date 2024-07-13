@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/data/expense_data.dart';
+import 'data/expense_data.dart';
 // import 'package:myapp/data/navigation.dart';
 import 'package:provider/provider.dart';
 import 'pages/dashboard.dart';
