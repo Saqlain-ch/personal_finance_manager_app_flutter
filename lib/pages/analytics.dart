@@ -23,8 +23,9 @@ class Analytics extends StatelessWidget {
                   children: [
                     Text(
                       "Last Week Expenses",
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color:Colors.black87),
                     ),
+                    SizedBox(height: 15),
                     SizedBox(
                         height: 200,
                         child:

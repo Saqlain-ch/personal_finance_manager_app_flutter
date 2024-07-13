@@ -88,15 +88,16 @@ class ExpenseData extends ChangeNotifier {
       String date = convertDateTimeToString(expense.datetime);
       double amount = double.parse(expense.amount); // Corrected typo
 
-      if (dailyExpenseSummary.containsKey(date)) {
-        double currentAmount = dailyExpenseSummary[date]!;
-        if (expense.type == "Expense") {
-          currentAmount += amount;
-          dailyExpenseSummary[date] = currentAmount;
-        }
-      } else {
-        dailyExpenseSummary.addAll({date: amount});
+      // if (dailyExpenseSummary.containsKey(date)) {
+      double currentAmount = dailyExpenseSummary[date] ?? 0;
+      if (expense.type == "Expense") {
+        currentAmount += amount;
+        dailyExpenseSummary[date] = currentAmount;
       }
+      // }
+      // else {
+      //   dailyExpenseSummary.addAll({date: amount});
+      // }
     }
 
     return dailyExpenseSummary;
