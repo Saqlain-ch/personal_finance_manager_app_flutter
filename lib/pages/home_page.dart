@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/data/expense_data.dart';
+import 'package:myapp/main.dart';
 import 'package:myapp/models/expense_item.dart';
 import 'package:provider/provider.dart';
 import 'package:myapp/dateTime/date_time_healper.dart';
@@ -213,7 +214,6 @@ class _myHomePageState extends State<myHomePage> {
                   },
                   child: const Text("Save"),
                 ),
-                
               ],
             ));
   }
@@ -267,7 +267,7 @@ class _myHomePageState extends State<myHomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _homeBalnceBox(),
+                    _homeBalnceBox(context),
                     SizedBox(height: 15),
                     Center(
                       child: Column(
@@ -282,15 +282,14 @@ class _myHomePageState extends State<myHomePage> {
                                 },
                                 text: 'Expense',
                                 icon: Icons.arrow_upward,
-                                backgroundColor:
-                                    const Color.fromARGB(255, 255, 133, 133),
+                                backgroundColor: redExpenseColor,
                                 width: MediaQuery.of(context).size.width / 2.4,
                               ),
                               CustomButton(
                                 onPressed: () => addNewIncome(context),
                                 text: 'Income',
                                 icon: Icons.arrow_downward,
-                                backgroundColor: Color(0xFF4E9B51),
+                                backgroundColor: greenIncomeColor,
                                 width: MediaQuery.of(context).size.width / 2.4,
                               ),
                             ],
@@ -314,11 +313,11 @@ class _myHomePageState extends State<myHomePage> {
 
 //______________________ BALANCE BOX ______________________
 
-Widget _homeBalnceBox() {
+Widget _homeBalnceBox(context) {
   return Container(
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: const Color(0xFF6A78FA)),
+        color: Theme.of(context).primaryColor),
     child: Padding(
       padding: EdgeInsets.all(10.0),
       child: Column(
@@ -391,8 +390,8 @@ Widget _transactionBox() {
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: value.getAllExpenseList()[index].type == "Income"
-                  ? Color.fromARGB(255, 118, 221, 122)
-                  : Color.fromARGB(255, 255, 148, 141),
+                  ? greenIncomeColor
+                  : redExpenseColor,
               child: Icon(
                 value.getAllExpenseList()[index].type == "Income"
                     ? CupertinoIcons.arrow_down_left
@@ -460,8 +459,8 @@ class CustomButton extends StatelessWidget {
           ),
         ),
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(backgroundColor),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          backgroundColor: WidgetStateProperty.all<Color>(backgroundColor),
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30),
             ),

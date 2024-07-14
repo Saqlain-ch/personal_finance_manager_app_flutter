@@ -58,6 +58,34 @@ class ExpenseData extends ChangeNotifier {
     return now.subtract(Duration(days: now.weekday));
   }
 
+  // calculate all this month expense which are with expense.type =="Expense"
+  String getThisMothExpense() {
+    int thisMonthExpense = 0;
+    for (var expanse in overallExpenseList) {
+      if (expanse.type == "Expense" &&
+          expanse.datetime.month == DateTime.now().month) {
+        thisMonthExpense += int.parse(expanse.amount);
+      }
+    }
+    // convert thisMonthExpense to two desimals only
+    thisMonthExpense = int.parse(thisMonthExpense.toStringAsFixed(2));
+    return thisMonthExpense.toString();
+  }
+
+  // calculate all this month Income which are with expense.type =="Inocome"
+  String getThisMonthIncome() {
+    int thisMonthIncome = 0;
+    for (var expanse in overallExpenseList) {
+      if (expanse.type == "Income" &&
+          expanse.datetime.month == DateTime.now().month) {
+        thisMonthIncome += int.parse(expanse.amount);
+      }
+    }
+    // convert thisMonthIncome to two desimals only
+    thisMonthIncome = int.parse(thisMonthIncome.toStringAsFixed(2));
+    return thisMonthIncome.toString();
+  }
+
   /*
    
     convert overall expenses into daily expense summary
@@ -113,6 +141,8 @@ class ExpenseData extends ChangeNotifier {
         crruntBalance -= double.parse(expanse.amount);
       }
     }
+    //convert crrunt balance to two desimals only
+    crruntBalance = double.parse(crruntBalance.toStringAsFixed(2));
     return crruntBalance.toString();
   }
 }

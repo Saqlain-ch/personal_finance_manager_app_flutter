@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:myapp/main.dart';
 import '../data/expense_data.dart';
 import 'package:provider/provider.dart';
 import '../dateTime/date_time_healper.dart';
@@ -84,8 +85,8 @@ class getTranactions extends StatelessWidget {
         ListTile(
       leading: CircleAvatar(
         backgroundColor: type == "Income"
-            ? Color.fromARGB(255, 118, 221, 122)
-            : Color.fromARGB(255, 221, 122, 115),
+            ? greenIncomeColor
+            : redExpenseColor,
         child: Icon(
           type == "Income"
               ? CupertinoIcons.arrow_down_left

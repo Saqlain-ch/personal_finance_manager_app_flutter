@@ -52,7 +52,7 @@ class ExpenseSummary extends StatelessWidget {
 
     return Consumer<ExpenseData>(
       builder: (context, value, chaild) => SizedBox(
-        // height: 200,
+        height: 200,
         child: MyBarGraph(
           maxY: CalculatedMax(value, sunday, monday, tuesday, wednesday,
               thursday, friday, saturday),
