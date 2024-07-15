@@ -72,7 +72,10 @@ class MyBarGraph extends StatelessWidget {
 }
 
 Widget ChartBotomTitles(double value, TitleMeta meta) {
-  const style = TextStyle(color: Colors.grey, fontSize: 14);
+  const style = TextStyle(
+    color: Colors.grey,
+    fontSize: 14,
+  );
   Widget text;
   switch (value.toInt()) {
     case 0:

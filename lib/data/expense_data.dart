@@ -60,31 +60,36 @@ class ExpenseData extends ChangeNotifier {
 
   // calculate all this month expense which are with expense.type =="Expense"
   String getThisMothExpense() {
-    int thisMonthExpense = 0;
+    double thisMonthExpense = 0;
     for (var expanse in overallExpenseList) {
       if (expanse.type == "Expense" &&
           expanse.datetime.month == DateTime.now().month) {
-        thisMonthExpense += int.parse(expanse.amount);
+        thisMonthExpense += double.parse(expanse.amount);
       }
     }
     // convert thisMonthExpense to two desimals only
-    thisMonthExpense = int.parse(thisMonthExpense.toStringAsFixed(2));
+    thisMonthExpense = double.parse(thisMonthExpense.toStringAsFixed(2));
     return thisMonthExpense.toString();
   }
 
   // calculate all this month Income which are with expense.type =="Inocome"
   String getThisMonthIncome() {
-    int thisMonthIncome = 0;
+    double thisMonthIncome = 0;
     for (var expanse in overallExpenseList) {
+      print("for run for ${expanse.amount}");
       if (expanse.type == "Income" &&
           expanse.datetime.month == DateTime.now().month) {
-        thisMonthIncome += int.parse(expanse.amount);
+        thisMonthIncome += double.parse(expanse.amount);
+        print("if run for ${expanse.amount}");
       }
     }
-    // convert thisMonthIncome to two desimals only
-    thisMonthIncome = int.parse(thisMonthIncome.toStringAsFixed(2));
+    //convert this month income to two desimals only
+    thisMonthIncome = double.parse(thisMonthIncome.toStringAsFixed(2));
+    
     return thisMonthIncome.toString();
   }
+
+  
 
   /*
    

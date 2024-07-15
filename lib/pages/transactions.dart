@@ -4,6 +4,7 @@ import 'package:myapp/main.dart';
 import '../data/expense_data.dart';
 import 'package:provider/provider.dart';
 import '../dateTime/date_time_healper.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class allTransactions extends StatefulWidget {
   const allTransactions({super.key});
@@ -27,7 +28,7 @@ class _allTransactionsState extends State<allTransactions> {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [_allTransactionBox()],
+            children: [allTransactionBox()],
           ),
         ),
       ),
@@ -35,76 +36,84 @@ class _allTransactionsState extends State<allTransactions> {
   }
 }
 
-Widget _allTransactionBox() {
+Widget allTransactionBox({int? maxTransactions}) {
   return Consumer<ExpenseData>(builder: (context, value, _) {
     return Expanded(
       child: ListView.builder(
-        itemBuilder: (context, index) => Padding(
+        itemBuilder: (context, index) {
+          if (maxTransactions != null && index >= maxTransactions) {
+            return const SizedBox.shrink();
+          }
+          return Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: getTranactions(
               name: value.getAllExpenseList()[index].name.toString(),
               type: value.getAllExpenseList()[index].type,
               datetime: value.getAllExpenseList()[index].datetime,
               amount: value.getAllExpenseList()[index].amount,
-            )),
-        itemCount: value.getAllExpenseList().length,
+              deleteTapped: (p0) =>
+                  value.deleteExpense(value.getAllExpenseList()[index]),
+            ),
+          );
+        },
+        itemCount: maxTransactions != null
+            ? maxTransactions
+            : value.getAllExpenseList().length,
       ),
     );
   });
 }
 
+// ignore: must_be_immutable
 class getTranactions extends StatelessWidget {
   final String name;
   final String type;
   final DateTime datetime;
   final String amount;
-  // void Function(BuildContext)? deleteTapped;
-  // final int maxTransactions;
+  void Function(BuildContext)? deleteTapped;
   getTranactions({
     super.key,
     required this.name,
     required this.type,
     required this.datetime,
     required this.amount,
-    // required this.deleteTapped,
+    required this.deleteTapped,
   });
+
   @override
   Widget build(BuildContext context) {
-    return
-        // Slidable(
-        //   endActionPane: ActionPane(
-        //     motion: const StretchMotion(),
-        //     children: [
-        //       onPressed:deleteTapped,
-        //       icon: Icons.delete,
-        //       color: Colors.red,
-        //       label: "Delete",
-        //     ]
-        //     ),
-        //   child:
-        ListTile(
-      leading: CircleAvatar(
-        backgroundColor: type == "Income"
-            ? greenIncomeColor
-            : redExpenseColor,
-        child: Icon(
-          type == "Income"
-              ? CupertinoIcons.arrow_down_left
-              : CupertinoIcons.arrow_up_right,
-          color: Colors.white,
+    return Slidable(
+      endActionPane: ActionPane(motion: const StretchMotion(), children: [
+        SlidableAction(
+          onPressed: deleteTapped,
+          icon: Icons.delete,
+          backgroundColor: redExpenseColor,
+          // Color: Colors.red,
+          label: "Delete",
         ),
+      ]),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor:
+              type == "Income" ? greenIncomeColor : redExpenseColor,
+          child: Icon(
+            type == "Income"
+                ? CupertinoIcons.arrow_down_left
+                : CupertinoIcons.arrow_up_right,
+            color: Colors.white,
+          ),
+        ),
+        title: Text(name),
+        subtitle: Text(dateToMMDD(datetime).toString() + " - " + type),
+        trailing: Text(
+          amount,
+          style: const TextStyle(fontSize: 18),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        tileColor: Color.fromARGB(172, 230, 230, 230),
       ),
-      title: Text(name),
-      subtitle: Text(dateToMMDD(datetime).toString() + " - " + type),
-      trailing: Text(
-        amount,
-        style: const TextStyle(fontSize: 18),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      tileColor: Color.fromARGB(172, 230, 230, 230),
-      // ),
     );
   }
 }

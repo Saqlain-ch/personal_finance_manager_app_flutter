@@ -4,8 +4,8 @@ import 'package:myapp/data/expense_data.dart';
 import 'package:myapp/main.dart';
 import 'package:myapp/models/expense_item.dart';
 import 'package:provider/provider.dart';
+import 'transactions.dart';
 import 'package:myapp/dateTime/date_time_healper.dart';
-
 class myHomePage extends StatefulWidget {
   const myHomePage({super.key});
 
@@ -301,7 +301,8 @@ class _myHomePageState extends State<myHomePage> {
                     Text("Recent Transactions",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w400)),
-                    _transactionBox(),
+                    // _transactionBox(),
+                    allTransactionBox(maxTransactions: 25)
                     // SizedBox(height: 15),
                     // const Text("Here we are!"),
                   ],

@@ -23,9 +23,17 @@ class Analytics extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: ListView(
                   children: [
-                    // thisMonthIncomeAndExpense(),
                     Text(
-                      "Last Week Expenses",
+                      "This month so far ",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    thisMonthIncomeAndExpense(),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      "Last week expenses",
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -48,34 +56,53 @@ String income = ExpenseData().getThisMonthIncome();
 String expense = "500";
 //widget to get to display this month total expense
 Widget thisMonthIncomeAndExpense() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        "This month so far ",
-        textAlign: TextAlign.left,
-        style: TextStyle(fontSize: 24),
-      ),
-      ListTile(
-        leading: CircleAvatar(
-          backgroundColor: greenIncomeColor,
-          child: Icon(
-            CupertinoIcons.arrow_down_left,
-            color: Colors.white,
-          ),
-        ),
-        title: Text("Income"),
-        // subtitle: Text(dateToMMDD(datetime).toString() + " - " + type),
-        trailing: Text(
-          "Rs. ${income}",
-          style: const TextStyle(fontSize: 18),
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        tileColor: Color.fromARGB(172, 230, 230, 230),
-        // ),
-      )
-    ],
-  );
+  return Consumer<ExpenseData>(
+      builder: (context, value, child) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: greenIncomeColor,
+                  child: Icon(
+                    CupertinoIcons.arrow_down_left,
+                    color: Colors.white,
+                  ),
+                ),
+                title: Text("Income"),
+                // subtitle: Text(dateToMMDD(datetime).toString() + " - " + type),
+                trailing: Text(
+                  "Rs. ${value.getThisMonthIncome()}",
+                  style: const TextStyle(fontSize: 18),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                tileColor: Color.fromARGB(172, 230, 230, 230),
+                // ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: redExpenseColor,
+                  child: Icon(
+                    CupertinoIcons.arrow_up_right,
+                    color: Colors.white,
+                  ),
+                ),
+                title: Text("Expense"),
+                // subtitle: Text(dateToMMDD(datetime).toString() + " - " + type),
+                trailing: Text(
+                  "Rs. ${value.getThisMothExpense()}",
+                  style: const TextStyle(fontSize: 18),
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                tileColor: Color.fromARGB(172, 230, 230, 230),
+                // ),
+              )
+            ],
+          ));
 }
