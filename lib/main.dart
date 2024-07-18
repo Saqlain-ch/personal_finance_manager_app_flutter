@@ -30,6 +30,7 @@ class StartHome extends StatelessWidget {
         ),
 
         debugShowCheckedModeBanner: false,
+        // home: LoginScreen(),
         home: Dashboard(),
         // home: NavigationMenu(),
       ),

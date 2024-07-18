@@ -5,7 +5,7 @@ import 'package:myapp/main.dart';
 import 'package:myapp/models/expense_item.dart';
 import 'package:provider/provider.dart';
 import 'transactions.dart';
-import 'package:myapp/dateTime/date_time_healper.dart';
+
 class myHomePage extends StatefulWidget {
   const myHomePage({super.key});
 
@@ -302,7 +302,7 @@ class _myHomePageState extends State<myHomePage> {
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w400)),
                     // _transactionBox(),
-                    allTransactionBox(maxTransactions: 25)
+                    allTransactionBox(maxTransactions: 35)
                     // SizedBox(height: 15),
                     // const Text("Here we are!"),
                   ],
@@ -378,49 +378,6 @@ Widget _homeBalnceBox(context) {
       ),
     ),
   );
-}
-
-//______________________ TRANSACTIONS ______________________
-
-Widget _transactionBox() {
-  return Consumer<ExpenseData>(builder: (context, value, _) {
-    return Expanded(
-      child: ListView.builder(
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.only(top: 5.0),
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: value.getAllExpenseList()[index].type == "Income"
-                  ? greenIncomeColor
-                  : redExpenseColor,
-              child: Icon(
-                value.getAllExpenseList()[index].type == "Income"
-                    ? CupertinoIcons.arrow_down_left
-                    : CupertinoIcons.arrow_up_right,
-                color: Colors.white,
-              ),
-            ),
-            title: Text(value.getAllExpenseList()[index].name ?? "N/A"),
-            subtitle: Text(dateToMMDD(value.getAllExpenseList()[index].datetime)
-                    .toString() +
-                " - " +
-                value.getAllExpenseList()[index].type),
-            trailing: Text(
-              value.getAllExpenseList()[index].amount,
-              style: const TextStyle(fontSize: 18),
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            tileColor: Color.fromARGB(172, 230, 230, 230),
-          ),
-        ),
-        itemCount: value.getAllExpenseList().length > 15
-            ? 15
-            : value.getAllExpenseList().length,
-      ),
-    );
-  });
 }
 
 //_________________________BUTTONS___________________________

@@ -38,12 +38,18 @@ class _allTransactionsState extends State<allTransactions> {
 
 Widget allTransactionBox({int? maxTransactions}) {
   return Consumer<ExpenseData>(builder: (context, value, _) {
+    int length = maxTransactions != null
+        ? (maxTransactions > value.getAllExpenseList().length
+            ? value.getAllExpenseList().length
+            : maxTransactions)
+        : value.getAllExpenseList().length;
+
     return Expanded(
       child: ListView.builder(
         itemBuilder: (context, index) {
-          if (maxTransactions != null && index >= maxTransactions) {
-            return const SizedBox.shrink();
-          }
+          // if (maxTransactions != null && index >= maxTransactions) {
+          //   return const SizedBox.shrink();
+          // }
           return Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: getTranactions(
@@ -56,9 +62,7 @@ Widget allTransactionBox({int? maxTransactions}) {
             ),
           );
         },
-        itemCount: maxTransactions != null
-            ? maxTransactions
-            : value.getAllExpenseList().length,
+        itemCount: length,
       ),
     );
   });
@@ -84,9 +88,20 @@ class getTranactions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Slidable(
       endActionPane: ActionPane(motion: const StretchMotion(), children: [
+        //Edit button just use Need backend configrations
+        // SlidableAction(
+        //   borderRadius: BorderRadius.circular(5),
+        //   onPressed: deleteTapped,
+        //   icon: CupertinoIcons.create_solid,
+        //   autoClose: true,
+        //   // backgroundColor: redExpenseColor,
+        //   label: "Edit",
+        // ),
         SlidableAction(
+          borderRadius: BorderRadius.circular(5),
           onPressed: deleteTapped,
-          icon: Icons.delete,
+          autoClose: true,
+          icon: CupertinoIcons.trash,
           backgroundColor: redExpenseColor,
           // Color: Colors.red,
           label: "Delete",
