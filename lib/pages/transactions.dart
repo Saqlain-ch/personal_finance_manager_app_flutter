@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/main.dart';
+import 'package:myapp/models/amount_healper.dart';
 import '../data/expense_data.dart';
 import 'package:provider/provider.dart';
 import '../dateTime/date_time_healper.dart';
@@ -58,7 +59,7 @@ Widget allTransactionBox({int? maxTransactions}) {
               datetime: value.getAllExpenseList()[index].datetime,
               amount: value.getAllExpenseList()[index].amount,
               deleteTapped: (p0) =>
-                  value.deleteExpense(value.getAllExpenseList()[index]),
+                  value.deleteExpense(value.getAllExpenseList()[index], context),
             ),
           );
         },
@@ -121,7 +122,7 @@ class getTranactions extends StatelessWidget {
         title: Text(name),
         subtitle: Text(dateToMMDD(datetime).toString() + " - " + type),
         trailing: Text(
-          amount,
+         formatAmount(amount),
           style: const TextStyle(fontSize: 18),
         ),
         shape: RoundedRectangleBorder(

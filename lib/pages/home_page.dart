@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:myapp/data/expense_data.dart';
 import 'package:myapp/main.dart';
+import 'package:myapp/models/amount_healper.dart';
 import 'package:myapp/models/expense_item.dart';
 import 'package:provider/provider.dart';
 import 'transactions.dart';
@@ -47,6 +49,9 @@ class _myHomePageState extends State<myHomePage> {
                       decoration: const InputDecoration(
                         hintText: "Enter Amount",
                       ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                        ],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Error: Amount is required';
@@ -153,6 +158,9 @@ class _myHomePageState extends State<myHomePage> {
                       decoration: const InputDecoration(
                         hintText: "Enter Amount",
                       ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+                        ],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Error: Amount is required';
@@ -224,7 +232,7 @@ class _myHomePageState extends State<myHomePage> {
   }
 
   void deleteExpense(ExpenseItem expense) {
-    Provider.of<ExpenseData>(context, listen: false).deleteExpense(expense);
+    Provider.of<ExpenseData>(context, listen: false).deleteExpense(expense, context);
   }
 
   //save data
@@ -356,7 +364,7 @@ Widget _homeBalnceBox(context) {
             child: Align(
               alignment: Alignment.centerRight,
               child: Consumer<ExpenseData>(builder: (context, data, _) {
-                return Text("Rs.${data.getCrruntBalance()}",
+                return Text("Rs.${formatAmount(data.getCrruntBalance())}",
                     textAlign: TextAlign.right,
                     style: TextStyle(
                         color: Colors.white,

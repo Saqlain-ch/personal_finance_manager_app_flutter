@@ -38,11 +38,17 @@ class ExpenseData extends ChangeNotifier {
 
   //delete expense
 
-  void deleteExpense(ExpenseItem expense) {
+  void deleteExpense(ExpenseItem expense, context) {
     overallExpenseList.remove(expense);
-    notifyListeners();
     overallExpenseList.sort((a, b) => b.datetime.compareTo(a.datetime));
     db.saveDate(overallExpenseList);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Transaction deleted.'),
+        duration: Duration(seconds: 3),
+      ),
+    );
+    notifyListeners();
   }
 
   // get day from datetime object
@@ -85,11 +91,9 @@ class ExpenseData extends ChangeNotifier {
     }
     //convert this month income to two desimals only
     thisMonthIncome = double.parse(thisMonthIncome.toStringAsFixed(2));
-    
+
     return thisMonthIncome.toString();
   }
-
-  
 
   /*
    
