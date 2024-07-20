@@ -9,7 +9,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 const Color redExpenseColor = Color(0xFFFF8585);
 const Color greenIncomeColor = Color(0xFF4E9B51);
 void main() async {
-  //initialize hide
+  //initialize hive
   await Hive.initFlutter();
   //open a hive box
   await Hive.openBox("expense_database");
