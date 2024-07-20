@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "997778724573",
+    "project_id": "fiance-9e528",
+    "storage_bucket": "fiance-9e528.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997778724573:android:547921745d1a39f9a0ed34",
+        "android_client_info": {
+          "package_name": "com.cashmind.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEjjMMtl8dsVW5xqpnwpmyDHP6O-LQ6wM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997778724573:android:d024afca92b44beea0ed34",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEjjMMtl8dsVW5xqpnwpmyDHP6O-LQ6wM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
