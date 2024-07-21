@@ -3,7 +3,7 @@ import 'package:myapp/pages/login_page.dart';
 import 'data/expense_data.dart';
 // import 'package:myapp/data/navigation.dart';
 import 'package:provider/provider.dart';
-// import 'pages/dashboard.dart';
+import 'pages/dashboard.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -35,8 +35,8 @@ class StartHome extends StatelessWidget {
         ),
 
         debugShowCheckedModeBanner: false,
-        home: SafeArea(child: loginPage()),
-        // home: Dashboard(),
+        // home: SafeArea(child: loginPage()),
+        home: Dashboard(),
         // home: NavigationMenu(),
       ),
     );
